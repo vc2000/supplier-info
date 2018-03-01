@@ -29,21 +29,23 @@ species = list(set(raw_species))
     if i =="Striped Bass":
         print(i)"""
 
+
 lens =len(farms)
 start=0
-
-
 fs= dict()
 while start < lens:
     fname = farms[start]
-    d={}
     start += 1
-    #print(name)
+    d={}
     for line in data:
         if fname in line:
-            fs.setdefault(fname,[]).append(line[1])
-            fs.setdefault(fname,[]).append(line[2])
+            if line[1] in d:
+                d[line[1]] = d[line[1]]+line[2]
+            else:
+                d[line[1]] = line[2]
 
-#print a nice dictionaries
-for k,v in fs.items():
-    print(k,v)
+        fs[fname] = d
+
+print(fs)
+#for k,v in fs.items():
+#    print(k,v)
