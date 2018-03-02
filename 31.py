@@ -81,8 +81,18 @@ while start < flens:
                 d[line[1]] = line[2]
 
         fs[fname] = d
+#for k , v in fs.items():
+#    print(k,v)
 ####################avgerage#################
-for key , values in fs.items():
-    for k,v in values.items():
-        for k in countf:
-            print(k,v/countf[k])
+for p, f in pf.items():
+    for f, mt in fs.items():
+        for f,count in countf.items():
+            v_len = len(fs[f])
+            num =0
+            while num < v_len:
+                if f in fs:
+                    if species[num] in fs:
+                        print(p,f,fs[f][species[num]]/countf[f])
+                    else:
+                        break
+            fishes +=1
