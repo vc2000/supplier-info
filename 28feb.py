@@ -44,11 +44,7 @@ begin =0
 big_dic={}
 while begin < p_len:
     pname= plants[begin]
-    
-    if pname in big_dic:
-        big_dic[pname] = big_dic[pname]+plants[1]
-    else:
-        big_dic[pname] = plants[1]
+    begin += 1
 
     lens =len(farms)
     start=0
@@ -57,9 +53,6 @@ while begin < p_len:
         fname = farms[start]
         start += 1
         d={}
-
-        if
-        begin += 1
         for line in fsdata:
             if fname in line:
                 if line[1] in d:
@@ -68,4 +61,8 @@ while begin < p_len:
                     d[line[1]] = line[2]
 
             fs[fname] = d
+        if pname in big_dic:
+            big_dic[pname] = big_dic[pname]+fs[fname]
+        else:
+            big_dic[pname] = fs[fname]
 print(big_dic)
