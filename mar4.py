@@ -11,8 +11,7 @@ def open_file(file):
     del raw_data[0]
 
     return raw_data
-
-###########plant to farms - pf #############
+####################### pf ########################
 
 raw_plants=[]
 for i in open_file("plant-farm-link"):
@@ -32,6 +31,8 @@ while begin < p_len:
             else:
                 pf[line[0]] = [line[2]]
     begin +=1
+#for k,v in sorted(pf.items()):
+#    print(k,v)
 
 ########### For making the avgerage - number of farm has been offer - countf #############
 p_farms = []
@@ -45,14 +46,13 @@ for f in p_farms:
     else:
         countf[f] =1
 
-#for k, v in countf.items(): #not enough values to unpack -> use .items()
-#    print(k,v)
+#print(countf['F10265'])
 
 ###################farm to species - fs ################
 
 count=0
 fsdata = []
-for i in open_file("clean"):
+for i in open_file("audit-data"):
     if i[2]> 0:
         fsdata.append(i)
     count +=1
@@ -73,26 +73,37 @@ while start < flens:
     fname = farms[start]
     start += 1
     d={}
-    for line in open_file("clean"):
+    for line in fsdata:
         if fname in line:
-            if line[1] in d:
-                d[line[1]] = d[line[1]]+line[2]
-            else:
-                d[line[1]] = line[2]
+            if fname in countf:
+                if line[1] in d:
+                    d[line[1]] = d[line[1]]+line[2]
+                else:
+                    d[line[1]] = line[2]
 
-        fs[fname] = d
-for k , v in fs.items():
-    print(k,v)
-####################avgerage#################
-"""for p, f in pf.items():
-    for f, mt in fs.items():
-        for f,count in countf.items():
-            v_len = len(fs[f])
-            num =0
-            while num < v_len:
-                if f in fs:
-                    if species[num] in fs:
-                        print(p,f,fs[f][species[num]]/countf[f])
-                    else:
+
+                fish_count = 0
+                while fish_count < 14:
+                    try:
+                        fs[fname] = d[line[1]][species[fish_count]]/countf[fname]
+                    except:
                         break
-            fishes +=1"""
+                    fish_count +=1
+            else:
+                if line[1] in d:
+                    d[line[1]] = d[line[1]]+line[2]
+                else:
+                    d[line[1]] = line[2]
+                fs[fname] = d
+
+
+
+#for k,v in sorted(pf.items()):
+#    print(k,v)
+
+for k,v in sorted(fs.items()):
+    print(k,v)
+
+for p,f in sorted(pf.items()):
+    if f in fs.items():
+        print(p,f)
